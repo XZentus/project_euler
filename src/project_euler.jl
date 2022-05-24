@@ -36,7 +36,6 @@ function pe_1_sum_ranges(from=1, to=999)
     start3  = (from %  3 == 0) ? from : (from +  3 - from %  3)
     start5  = (from %  5 == 0) ? from : (from +  5 - from %  5)
     start15 = (from % 15 == 0) ? from : (from + 15 - from % 15)
-    println("$start3 $start5 $start15")
     sum(start3 : 3 : to) + sum(start5 : 5 : to) - sum(start15 : 15 : to)
 end
 
