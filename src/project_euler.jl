@@ -69,7 +69,6 @@ function pe_2(to = 4_000_000)
         type = types[i + 1]
     end
     a, b = type(1), type(2)
-    println(typeof(a), ' ', typeof(to))
     result = type(0)
     @time while a < to
         if !Bool(a & 1)
