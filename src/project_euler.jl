@@ -80,4 +80,22 @@ function pe_2(to = 4_000_000)
     result
 end
 
+function pe_3(number = 600851475143)
+    divisor = typeof(number)(2)
+    while (number & 1) == 0
+        number ÷= 2
+    end
+    divisor += 1
+    while divisor < number
+        while (number % divisor) == 0
+            number ÷= divisor
+        end
+        if number == 1
+            return divisor
+        end
+        divisor += 2
+    end
+    return number
+end
+
 end # module
