@@ -112,8 +112,15 @@ function pe_4(n_digits = 3)
                 @goto next_x
             end
 
-            num = string(x_y)
-            if num == reverse(num) && x_y > _product
+            # palindrome_test
+            rev = 0
+            num_bak = x_y
+            while num_bak > 0
+                num_bak, addition = divrem(num_bak, 10)
+                rev = rev * 10 + addition
+            end
+
+            if rev == x_y && x_y > _product
                 _x, _y, _product = x, y, x_y
             end
         end
