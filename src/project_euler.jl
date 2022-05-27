@@ -98,38 +98,29 @@ function pe_3(number = 600851475143)
     return number
 end
 
-struct Solution_4
-    x
-    y
-    product
-end
-
-
 function pe_4(n_digits = 3)
     from, to = 10^(n_digits - 1), 10^n_digits - 1
-    solution = Solution_4(0, 0, 0)
+    _x, _y, _product = (0, 0, 0)
     @time for x ∈ to:-1:from
-        if x * to < solution.product
+        if x * to < _product
             break
         end
 
         for y ∈ to:-1:x
             x_y = x * y
-            if x_y < solution.product
+            if x_y < _product
                 @goto next_x
             end
 
             num = string(x_y)
-            if num == reverse(num)
-                if x_y > solution.product
-                    solution = Solution_4(x, y, x_y)
-                end
+            if num == reverse(num) && x_y > _product
+                _x, _y, _product = x, y, x_y
             end
         end
         @label next_x
     end
-    println("$(solution.x) ∘ $(solution.y) = $(solution.product)")
-    solution.x, solution.y
+    println("$_x ∘ $_y = $_product")
+    _x, _y
 end
 
 end # module
