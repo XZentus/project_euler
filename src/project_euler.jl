@@ -21,7 +21,7 @@ end
 function pe_1_direct(from = 1, to = 999; timeout::UInt64 = UInt64(5_000_000_000))
     startTime = time_ns()
     result = 0
-    for x in from:to
+    for x ∈ from:to
         if (x % 3 == 0) || (x % 5 == 0)
             result += x
         end
@@ -96,6 +96,40 @@ function pe_3(number = 600851475143)
         divisor += 2
     end
     return number
+end
+
+struct Solution_4
+    x
+    y
+    product
+end
+
+
+function pe_4(n_digits = 3)
+    from, to = 10^(n_digits - 1), 10^n_digits - 1
+    solution = Solution_4(0, 0, 0)
+    @time for x ∈ to:-1:from
+        if x * to < solution.product
+            break
+        end
+
+        for y ∈ to:-1:x
+            x_y = x * y
+            if x_y < solution.product
+                @goto next_x
+            end
+
+            num = string(x_y)
+            if num == reverse(num)
+                if x_y > solution.product
+                    solution = Solution_4(x, y, x_y)
+                end
+            end
+        end
+        @label next_x
+    end
+    println("$(solution.x) ∘ $(solution.y) = $(solution.product)")
+    solution.x, solution.y
 end
 
 end # module
