@@ -157,7 +157,7 @@ end
 
 What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 """
-function pe_5(interval)
+function pe_5(interval=1:20)
     type = eltype(interval)
     primes = [2 => 0]
 
