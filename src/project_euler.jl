@@ -1,6 +1,6 @@
 module project_euler
 
-export pe_1, pe_2, pe_3, pe_4
+export pe_1, pe_2, pe_3, pe_4, pe_5
 
 """
 If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
@@ -150,6 +150,49 @@ function pe_4(n_digits = 3)
     end
     println("$_x ∘ $_y = $_product")
     _x, _y
+end
+
+"""
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+"""
+function pe_5(interval)
+    type = eltype(interval)
+    primes = [2 => 0]
+
+    # fill dict with prime keys ≤ (x/2 + 1)
+    for x ∈ 3:2:first(interval)÷2 + 1
+        is_prime = true
+        for (p, _) ∈ primes
+            # no need to check bigger divisors
+            p * 2 >= x && break
+            # not a prime
+            x % p == 0 && (is_prime = false ; break)
+        end
+        is_prime && append!(primes, [x => 0])
+    end
+
+    primes = Dict(primes)
+
+    for x ∈ interval
+        for (prime, count) ∈ primes
+            counter = 0
+            while x % prime == 0
+                counter += 1
+                x ÷= prime
+            end
+
+            counter > count && (primes[prime] = counter)
+        end
+
+        x != 1 && (primes[x] = 1)
+    end
+    result = big(1)
+    for (base, power) in primes
+        result *= base^power
+    end
+    return result <= typemax(type) ? type(result) : result
 end
 
 end # module
