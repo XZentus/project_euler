@@ -168,7 +168,7 @@ function pe_5(interval=1:20)
             # no need to check bigger divisors
             p^2 > x && break
             # not a prime
-            p^2 == x || x % p == 0 && (is_prime = false ; break)
+            (p^2 == x || x % p == 0) && (is_prime = false ; break)
         end
         is_prime && append!(primes, [x => 0])
     end
@@ -193,7 +193,7 @@ function pe_5(interval=1:20)
         result *= base^power
     end
 
-    type == BigInt || result > typemax(type) && return result
+    (type == BigInt || result > typemax(type)) && return result
     return type(result)
 end
 
