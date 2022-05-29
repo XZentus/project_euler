@@ -1,6 +1,6 @@
 module project_euler
 
-export pe_1, pe_2, pe_3, pe_4, pe_5
+export pe_1, pe_2, pe_3, pe_4, pe_5, pe_6
 
 """
 If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
@@ -195,6 +195,34 @@ function pe_5(interval=1:20)
 
     (type == BigInt || result > typemax(type)) && return result
     return type(result)
+end
+
+
+"""
+The sum of the squares of the first ten natural numbers is,
+
+The square of the sum of the first ten natural numbers is,
+
+Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is
+
+1^2 + 2^2 + … + 10^2 = 385
+(1 + 2 + … + 10)^2 = 55^2 = 3025
+
+Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+"""
+function pe_6(n = 100)
+    type = typeof(n)
+    if type != BigInt && n ≥ typemax(type)^(1/5) # overflow possible
+        types = (Int8, Int16, Int32, Int64, Int128, BigInt)
+        i = findfirst(t -> t == type, types)
+        if i isa Nothing
+            types = (UInt8, UInt16, UInt32, UInt64, UInt128, BigInt)
+            i = findfirst(t -> t == type, types)
+        end
+        type = types[i + 1]
+    end
+    n = type(n)
+    (n*(n + 1) ÷ 2)^2 - n*(n + 1)*(2n + 1) ÷ 6
 end
 
 end # module
