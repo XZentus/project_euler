@@ -166,9 +166,9 @@ function pe_5(interval=1:20)
         is_prime = true
         for (p, _) ∈ primes
             # no need to check bigger divisors
-            p * 2 >= x && break
+            p^2 > x && break
             # not a prime
-            x % p == 0 && (is_prime = false ; break)
+            p^2 == x || x % p == 0 && (is_prime = false ; break)
         end
         is_prime && append!(primes, [x => 0])
     end
@@ -192,7 +192,9 @@ function pe_5(interval=1:20)
     for (base, power) in primes
         result *= base^power
     end
-    return result <= typemax(type) ? type(result) : result
+
+    type == BigInt || result > typemax(type) && return result
+    return type(result)
 end
 
 end # module
