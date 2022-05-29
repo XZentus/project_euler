@@ -1,6 +1,6 @@
 module project_euler
 
-export pe_1, pe_2, pe_3, pe_4, pe_5, pe_6
+export pe_1, pe_2, pe_3, pe_4, pe_5, pe_6, pe_7
 
 """
 If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
@@ -223,6 +223,31 @@ function pe_6(n = 100)
     end
     n = type(n)
     (n*(n + 1) ÷ 2)^2 - n*(n + 1)*(2n + 1) ÷ 6
+end
+
+"""
+By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+
+What is the 10 001st prime number?
+"""
+function pe_7(n = 10_001)
+    primes = [2]
+    n_primes = 1
+    x = 3
+
+    while n_primes < n
+        is_prime = true
+        for p ∈ primes
+            # no need to check bigger divisors
+            p^2 > x && break
+            # not a prime
+            (p^2 == x || x % p == 0) && (is_prime = false ; break)
+        end
+        is_prime && (n_primes += 1; append!(primes, [x]))
+        x += 2
+    end
+
+    last(primes)
 end
 
 end # module
