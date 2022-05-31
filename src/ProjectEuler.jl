@@ -1,4 +1,4 @@
-module project_euler
+module ProjectEeuler
 
 export pe_1, pe_2, pe_3, pe_4, pe_5, pe_6, pe_7, pe_8
 
